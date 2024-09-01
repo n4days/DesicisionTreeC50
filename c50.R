@@ -4,8 +4,8 @@ if (!require(C50)) {
   library(C50)
 }
 
-# Siapkan data
-data <- data.frame(
+# Siapkan data training
+data_training <- data.frame(
   ID_Penumpang = c("PNP-0001", "PNP-0002", "PNP-0003", "PNP-0004", "PNP-0005", 
                    "PNP-0006", "PNP-0007", "PNP-0008", "PNP-0009"),
   Fasilitas = c("Tidak Lengkap", "Tidak Lengkap", "Tidak Lengkap", "Tidak Lengkap", 
@@ -19,10 +19,19 @@ data <- data.frame(
 )
 
 # Buat model decision tree menggunakan C5.0
-model <- C5.0(Kepuasan ~ Fasilitas + Harga + Lokasi + Pelayanan, data = data)
+model <- C5.0(Kepuasan ~ Fasilitas + Harga + Lokasi + Pelayanan, data = data_training)
 
-# Lihat ringkasan model
-summary(model)
+# Siapkan data testing
+data_testing <- data.frame(
+  ID_Penumpang = "PNP-0010",
+  Fasilitas = "Tidak Lengkap",
+  Harga = "Mahal",
+  Lokasi = "Strategis",
+  Pelayanan = "Tidak Baik"
+)
 
-# Plot pohon keputusan
-plot(model)
+# Prediksi dengan model
+prediksi <- predict(model, data_testing)
+
+# Tampilkan hasil prediksi
+print(paste("Prediksi Kepuasan untuk PNP-0010:", prediksi))
