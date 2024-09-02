@@ -9,6 +9,11 @@ if (!require(readxl)) {
   library(readxl)
 }
 
+if (!require(writexl)) {
+  install.packages("writexl")
+  library(writexl)
+}
+
 # Baca data dari file Excel
 data_training <- read_excel("data_penumpang.xlsx", sheet = "Training")
 data_testing <- read_excel("data_penumpang.xlsx", sheet = "Testing")
@@ -42,4 +47,12 @@ confusion_matrix <- table(data_training$Kepuasan, data_training$Prediksi_Kepuasa
 
 # Tampilkan confusion matrix
 print(confusion_matrix)
+
+# Export hasil prediksi data_training ke file Excel
+write_xlsx(data_training, "hasil_prediksi_data_training.xlsx")
+
+# Export hasil prediksi data_testing ke file Excel
+write_xlsx(data_testing, "hasil_prediksi_data_testing.xlsx")
+
+print("Data berhasil diekspor ke file Excel.")
 
