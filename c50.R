@@ -15,7 +15,6 @@ data_testing <- read_excel("data_penumpang.xlsx", sheet = "Testing")
 
 # Konversi kolom 'Kepuasan' menjadi faktor
 data_training$Kepuasan <- factor(data_training$Kepuasan)
-data_testing$Kepuasan <- factor(data_testing$Kepuasan)
 
 # Cetak struktur data untuk memastikan tipe data
 print(str(data_training))
@@ -32,8 +31,15 @@ data_testing$Prediksi_Kepuasan <- prediksi
 # Tampilkan hasil prediksi
 print(data_testing)
 
+# Prediksi Data Training dengan model
+prediksi_training <- predict(model, data_training)
+
+# Tambahkan hasil prediksi ke data testing
+data_training$Prediksi_Kepuasan <- prediksi_training
+
 # Buat confusion matrix
-confusion_matrix <- table(data_testing$Kepuasan, data_testing$Prediksi_Kepuasan)
+confusion_matrix <- table(data_training$Kepuasan, data_training$Prediksi_Kepuasan)
 
 # Tampilkan confusion matrix
 print(confusion_matrix)
+
